@@ -15,7 +15,7 @@ namespace nvs {
         if (pair == NULL) {
             return PSTR("");
         } else{
-            String s = PSTR((char*)pair->value);
+            String s = PSTR((char*)pair->value) + '\0';
             delete pair;
             return s;
         }
