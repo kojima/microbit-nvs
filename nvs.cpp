@@ -1,26 +1,48 @@
+/*
+ * Reference: https://github.com/bsiever/microbit-pxt-flashstorage
+ */
 #include "pxt.h"
+#include "MicroBit.h"
+
+using namespace pxt;
 
 namespace nvs {
     
-    //%
-    void init() {
-        KeyValuePair* firstTime = uBit.storage.get("boot");
-    
-        int stored;
-    
-        if(firstTime == NULL)
-        {
-            //this is the first boot after a flash. Store a value!
-            stored = 1;
-            uBit.storage.put("boot", (uint8_t *)&stored, sizeof(int));
-            uBit.display.scroll("Stored!");
+    //% 
+    String get(String key) {
+        if(!key) return PSTR("");
+        KeyValuePair *pair = uBit.storage.get(key->getUTF8Data());
+        if (pair == NULL) {
+            return PSTR("");
+        } else{
+            String s = PSTR((char*)pair->value);
+            delete pair;
+            return s;
         }
-        else
-        {
-            //this is not the first boot, scroll our stored value.
-            memcpy(&stored, firstTime->value, sizeof(int));
-            delete firstTime;
-            uBit.display.scroll(stored);
+    }
+
+    //% 
+    void remove(String key) {
+        if(!key) return;
+        uBit.storage.remove(key->getUTF8Data());
+    }
+
+    //% 
+    int size() {
+        int size = uBit.storage.size();
+        return size;
+    }
+
+    //% 
+    void put(String key, String value) {
+        if(!key) return;
+        if(!value) {
+            remove(key);
+            return;
         }
+        uBit.storage.put(
+            key->getUTF8Data(),
+            (uint8_t*)value->getUTF8Data(),
+            value->getUTF8Size());
     }
 }
