@@ -10,7 +10,8 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "nvs.ts"
+        "nvs.ts",
+        "nvs.cpp"
     ],
     "testFiles": [
         "test.ts"
