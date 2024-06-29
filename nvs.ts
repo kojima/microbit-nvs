@@ -2,7 +2,7 @@
  * NVS blocks
  * icon: http://fontawesome.io/icons
  */
-//% weight=100 color=#696969 icon="\uf1b2"
+//% weight=100 color=#696969 icon="\uf1b2" block="NVS"
 namespace nvs {
 
     let simMap: any = null
@@ -13,29 +13,22 @@ namespace nvs {
         return simMap ? simMap.size : 0;
     }
 
-    //% blockId="flash get or default" block="flash get %key or use %defaultValue if key not saved"
-    export function getOrDefault(key: string, defaultValue: string): string {
-        let value = get(key)
-        return value.length == 0 ? defaultValue : value;
-    }
-
     //% blockId="flash remove key" block="flash remove key %key"
     //% shim=nvs::remove
     export function remove(key: string): void {
         if (simMap) simMap.delete(key);
     }
 
-    //% blockId="flash get key" block="flash get key %key"
-    //% shim=nvs::get
-    export function get(key: string): string {
-        return simMap ? simMap[key] : "";
+    //% blockId="flash get buffer of key with size" block="flash get buffer of key %key with size %dataSize"
+    //% shim=nvs::getBuffer
+    export function getBuffer(key: string, dataSize: number): Buffer {
+        return simMap ? simMap[key] : -1;
     }
 
-
-    //% blockId="flash put value for key" block="flash key %key's value to %value"
-    //% shim=nvs::put
-    export function put(key: string, value: string) {
+    //% blockId="flash put buffer for key" block="flash key %key's buffer as %data"
+    //% shim=nvs::putBuffer
+    export function putBuffer(key: string, data: Buffer) {
         if (!simMap) simMap = {};
-        simMap[key] = value;
+        simMap[key] = data.toString();
     }
 }
