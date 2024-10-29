@@ -1,5 +1,5 @@
 {
-    "name": "NVS",
+    "name": "NVS (Non Volatile Storage) library",
     "version": "0.2.0",
     "description": "",
     "dependencies": {
@@ -18,7 +18,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.28",
+        "target": "7.0.51",
         "targetId": "microbit"
     },
     "supportedTargets": [
