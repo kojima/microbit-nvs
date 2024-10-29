@@ -27,7 +27,7 @@ namespace nvs {
     //% shim=nvs::getBuffer
     export function getBuffer(key: string, dataSize: number): Buffer {
         try {
-            return simMap ? simMap[key] : null;
+            return simMap && simMap[key] ? simMap[key] : null;
         } catch {
             return null;
         }
@@ -36,9 +36,7 @@ namespace nvs {
     //% blockId="flash put buffer for key" block="flash key %key's buffer as %data"
     //% shim=nvs::putBuffer
     export function putBuffer(key: string, data: Buffer) {
-        try {
-            if (!simMap) simMap = {};
-            simMap[key] = data.toString();
-        } catch {}
+        if (!simMap) simMap = {};
+        if (data) simMap[key] = data.toString();
     }
 }
