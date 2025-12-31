@@ -21,8 +21,8 @@ namespace nvs {
 
     //% blockId="flash get buffer of key with size" block="flash get buffer of key %key with size %dataSize"
     //% shim=nvs::getBuffer
-    export function getBuffer(key: string, dataSize: number): Buffer {
-        return simMap && simMap[key] ? simMap[key] : -1;
+    export function getBuffer(key: string, dataSize: number): Buffer | null {
+        return simMap && simMap[key] ? simMap[key] : null;
     }
 
     //% blockId="flash put buffer for key" block="flash key %key's buffer as %data"
